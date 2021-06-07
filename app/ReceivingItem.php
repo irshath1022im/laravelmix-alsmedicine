@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReceivingItem extends Model
 {
     //
+    protected $fillable = ['item_id', 'receiving_id', 'qty', 'unit_price', 'cost', 'expiry_date','remark'];
 
     public function receiving()
     {

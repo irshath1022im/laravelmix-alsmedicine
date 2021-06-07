@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->namespace('Api\V1')->group( function(){
     Route::apiResource('/item', 'ItemController');
     Route::apiResource('/receiving', 'ReceivingController');
+    Route::apiResource('/receivingItem', 'ReceivingItemController');
 });
