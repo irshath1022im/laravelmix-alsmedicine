@@ -17,7 +17,7 @@ export const initialReceivingAction = () =>{
                  links:{},
                  loading: true
              }));
-           const result = await axios.get('http://localhost:8000/api/v1/receiving')
+           const result = await axios.get(`${process.env.MIX_API_URL}/receiving`)
         //    console.log(result)
             const {data,links} = result.data
            dispatch(initialReceivings(
@@ -63,11 +63,11 @@ export const loadMoreAction = (url) => {
 export const searchItemAction = (searchValue) => {
     return async(dispatch) =>{
         try {
-            const result = await axios.get(`http://localhost:8000/api/V1/items/query?searchValue=${searchValue}`)
-             console.log(result)
+            const result = await axios.get(`${process.env.MIX_API_URL}/items/query?searchValue=${searchValue}`)
+            //  console.log(result)
 
          } catch (error) {
-             
+
            console.log(error)
          }
     }

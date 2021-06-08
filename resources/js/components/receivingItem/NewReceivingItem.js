@@ -1,5 +1,5 @@
-import axios from 'axios'
 import React from 'react'
+import axios from 'axios'
 import { FaCartPlus, FaTimesCircle } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import Loading from '../shared/Loading'
@@ -38,15 +38,15 @@ search = async()=>{
                     ...this.state,
                     searchResultLoadingStatus: true
                 })
-            const result = await axios.get(`http://localhost:8000/api/v1/item?searchValue=${this.state.searchValue}`)
+            const result = await axios.get(`${process.env.MIX_API_URL}/item?searchValue=${this.state.searchValue}`)
                 this.setState({
                     ...this.state,
                     searchResult: result.data.data,
                     searchResultLoadingStatus: false
                 })
-                
+
             } catch (error) {
-                
+
             }
         }
 }
@@ -62,18 +62,15 @@ addToSelectedItem = (item)=>{
 
 addToReceivingItem = async(e)=>{
 
-  e.preventDefault();
-
-  this.setState({
-    ...this.state,
-    formSubmitStatus: true,
-    formErrorMsg:'',
-    searchValue:'',
-    searchResult:[]
-        })
-  
+    this.setState({
+        ...this.state,
+        formSubmitStatus: true,
+        formErrorMsg:'',
+        searchValue:'',
+        searchResult:[]
+            })
     let newItem =  {
-        receiving_id: this.props.receiving_id, 
+        receiving_id: this.props.receiving_id,
         item_id : this.state.selecteditem.id,
         erp_code: this.state.selecteditem.erp_code,
         qty: this.state.qty,
@@ -83,10 +80,13 @@ addToReceivingItem = async(e)=>{
         remark: this.state.remark
         }
 
-   
+
 
     try {
-        const result = await axios.post('http://localhost:8000/api/v1/receivingItem', { ...newItem})
+        const result = await axios.post(`${process.env.MIX_API_URL}/receivingItem`, {...newItem})
+
+
+
         // console.log(result.status)
         if(result.status === 200) {
 
@@ -105,7 +105,7 @@ addToReceivingItem = async(e)=>{
 
 
     } catch (error) {
-        // console.log(error.response)
+        // console.log(error)
         if(error.response !== undefined){
             this.setState({
                 ...this.state,
@@ -113,7 +113,7 @@ addToReceivingItem = async(e)=>{
                 formSubmitStatus: false
             })
          } else {
-            
+
             this.setState({
                 ...this.state,
                 formErrorMsg: 'Error in Client Site...',
@@ -141,17 +141,17 @@ addToReceivingItem = async(e)=>{
                 <div className="card-body text-primary">
                         <form>
                         <button className="btn btn-outline-success btn-sm" type="button">Search Item</button>
-                        
+
                         <div className="d-flex">
-                            <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Search" 
-                            onChange={ (e) => this.setState({ searchValue: e.target.value }, ()=> this.search() )} 
+                            <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Search"
+                            onChange={ (e) => this.setState({ searchValue: e.target.value }, ()=> this.search() )}
                             value={searchValue}/>
-                            
+
                             <div className="d-flex align-items-center">
                                 <FaTimesCircle onClick={ ()=> this.setState({searchValue:'', searchResult:[]})}/>
                             </div>
                         </div>
-      
+
                         <div>
                         {
                             searchResultLoadingStatus ?
@@ -159,7 +159,7 @@ addToReceivingItem = async(e)=>{
 
                             :
                             searchResult.length > 0 &&
-                            
+
                             searchResult.map((item,key)=>{
                                 return (
                                     <div key={key} className="d-flex p-1 text-small" style={{ fontSize:12}}>
@@ -170,11 +170,11 @@ addToReceivingItem = async(e)=>{
 
                                         <FaCartPlus size="1.2rem" onClick={ ()=> this.addToSelectedItem(item)} />
 
-                                       
+
                                     </div>
                                 )
                             })
-                            
+
                         }
                         </div>
 
@@ -191,16 +191,16 @@ addToReceivingItem = async(e)=>{
                             </div>
 
                             <div>
-                                <input type="number" className="form-control" id="formGroupExampleInput2" placeholder="Qty" 
+                                <input type="number" className="form-control" id="formGroupExampleInput2" placeholder="Qty"
                                 onChange={(e)=>this.setState({ qty: Number(e.target.value)})} value={qty} />
-                                
+
                                 {
                                     qty === '' &&
                                     <p className="form-text text-danger text-primary">
                                         * required
                                     </p>
                                 }
-                            
+
                             </div>
 
                             <div>
@@ -216,9 +216,9 @@ addToReceivingItem = async(e)=>{
 
                             <div>
                              <input type="number" className="form-control" id="formGroupExampleInput2" placeholder="Total" value={qty * unit_price} readOnly/>
-                             
+
                             </div>
-                            
+
                            <div>
                                 <div className="input-group mb-3">
                                     <div className="input-group-prepend">
@@ -226,7 +226,7 @@ addToReceivingItem = async(e)=>{
                                     </div>
 
                                     <input type="date" className="form-control" onChange={ (e)=>this.setState({ expiry_date: e.target.value})}/>
-                                   
+
                                 </div>
                                 {
                                     expiry_date === '' &&
@@ -242,18 +242,18 @@ addToReceivingItem = async(e)=>{
                             </div>
                         </div>
 
-                        <button className="btn btn-success btn-sm" type="button" 
+                        <button className="btn btn-success btn-sm" type="button"
                             disabled={Object.keys(selecteditem).length > 0 && expiry_date !== '' && qty !== '' && unit_price !== '' ? false : true}
                             onClick={ (e)=>this.addToReceivingItem(e)}>Add to List</button>
-                    
+
                         </form>
-                        
-            
+
+
                 </div>
             </div>
-            
+
           :
-           <Loading  message="Sending Request..." />             
+           <Loading  message="Sending Request..." />
         }
         </div>
     )

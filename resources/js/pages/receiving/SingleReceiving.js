@@ -26,7 +26,7 @@ componentDidMount() {
 
 getReceiving = async(id)=>{
     try {
-        const result = await axios.get(`http://localhost:8000/api/v1/receiving/${id}`)
+        const result = await axios.get(`${process.env.MIX_API_URL}/receiving/${id}`)
         // console.log(result);
         this.setState({
             data: result.data
@@ -40,14 +40,14 @@ getReceiving = async(id)=>{
         const {match} = this.props
         const {data, modalShow} = this.state;
 
-        if(Object.keys(data).length > 0){    
+        if(Object.keys(data).length > 0){
                     const {id,receiving_date,po,supplier,receiving_items_total,receiving_items} = data
                     return(
                         <div>
                             <Card>
                                 <Card.Header>RECEIVING-ID : {match.params.id}</Card.Header>
-                                <Card.Body>                              
-                                  
+                                <Card.Body>
+
                                     <div>
                                         <div className="" >
                                             <table className="table">
@@ -68,12 +68,12 @@ getReceiving = async(id)=>{
                                                                     <td>{po}</td>
                                                                     <td>{supplier}</td>
                                                                     <td>{receiving_items_total}</td>
-                                                                </tr>  
+                                                                </tr>
                                                 }
                                                     </tbody>
                                                 </table>
                                         </div>
-                                        
+
                                         <div>
                                             <button className="btn btn-primary btn-sm" type="button" onClick={ ()=>this.setState({modalShow: true})}>Add Items</button>
                                             <table className="table">
@@ -112,23 +112,23 @@ getReceiving = async(id)=>{
 
 
                                     </div>
-                                  
-                        
+
+
                         </Card.Body>
                      </Card>
-                                           
+
                      <div>
-                            <NewReceivingItemModal 
+                            <NewReceivingItemModal
                                 show={modalShow}
                                 handleClose= { ()=>this.setState({modalShow:!modalShow}, () => { this.getReceiving(match.params.id)})}
                                 receiving_id={match.params.id}
                                 />
-                      
+
                     </div>
 
                 </div>
             )
-        }                     
+        }
         else {
             return(
                 <div>

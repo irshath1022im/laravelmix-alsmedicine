@@ -13,9 +13,8 @@ import AddReceiving from './pages/receiving/AddReceiving';
 
 function Home() {
   return (
+
     <div className="container">
-
-
        <Router>
         <NavBar />
         <hr />

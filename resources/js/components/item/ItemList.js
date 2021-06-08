@@ -19,7 +19,7 @@ export default function ItemList(props) {
                             </button>
                         </a>
                     </td>
-                    </tr>
+                </tr>
         </>
     )
 }

@@ -20,23 +20,23 @@ class HomeItem extends React.Component {
 
 componentDidMount() {
 
-    this.getItems('http://localhost:8000/api/v1/item')
-   
+    this.getItems(`${process.env.MIX_API_URL}/item`)
+
 }
 
 getItems = async(url) =>{
     try {
         this.setState({ loading: true})
-        const result = await axios.get(url); 
-          console.log(result)
+        const result = await axios.get(url);
+        //   console.log(result)
         this.setState({
             loading: false,
             data: result.data.data,
             links: result.data.links
         })
-  
+
       } catch (error) {
-          console.log(error)
+        //   console.log(error)
       }
 }
     render(){
@@ -50,14 +50,18 @@ getItems = async(url) =>{
                   <span>Category</span>
                   <Category />
                 </div>
-        
+
                 <div className="col">
-        
+
                         <div>
                             <input type="text" placeholder="Search Item" className="form-control" />
                         </div>
 
-        
+
+                        {
+                            loading === false &&
+                            data.length > 0 ?
+
                         <div>
                             <table className="table" >
                                 <thead className="thead-inverse">
@@ -70,53 +74,45 @@ getItems = async(url) =>{
                                 </tr>
                                 </thead>
                                 <tbody>
-        
-        
-                                    {
-                                        loading === false &&
-                                        data.length > 0 ?
+                                     {
+
                                             data.map((item) => {
                                                 return(
                                                     <ItemList items = {item} key={item.id} />
                                                 )
                                             })
-                                        
-
-                                     :
-                                    <tr>
-
-                                        <Loading message ="Getting Item List" />
-
-                                    </tr>
-
-                                    }
-        
-                                       
+                                      }
                                 </tbody>
-                            </table>      
+                            </table>
+
                         </div>
-        
+
+                        :
+                            <Loading message ="Getting Item List" />
+
+                        }
+
                         <div>
-        
+
                             {
                                 !loading &&
 
-                               
+
                                 <div>
-                                    <button className="btn btn-primary" type="button" 
+                                    <button className="btn btn-primary" type="button"
                                         disabled = { links.first !== null ? false : true}
                                         onClick={ () => this.getItems(links.first)}>
                                         First
                                     </button>
 
-                                    <button className="btn btn-primary" type="button" 
+                                    <button className="btn btn-primary" type="button"
                                             disabled = { links.next !== null ? false : true}
                                             onClick={ () => this.getItems(links.next)}
                                     >
                                         Next
                                     </button>
 
-                                    <button className="btn btn-primary" type="button" 
+                                    <button className="btn btn-primary" type="button"
                                         disabled = { links.last !== null ? false : true}
                                         onClick={ () => this.getItems(links.last)}>
                                         Last
@@ -125,16 +121,16 @@ getItems = async(url) =>{
 
 
                             }
-                          
-        
+
+
                         </div>
-        
+
                 </div>
             </div>
-        
-        
+
+
         </div>
-        
+
         )
     }
 }
