@@ -25,7 +25,10 @@ class ItemController extends Controller
                     {
                         return $query->where('name', 'like', '%'.$searchValue.'%')
                                     ->orWhere('erp_code', 'like', '%'.$searchValue.'%');
-                    })->paginate(10);
+                    })->paginate(10)
+                    ->appends($request->except('page'));
+
+
         return ItemResource::collection($result);
         // return response()->json($result, 200);
     }

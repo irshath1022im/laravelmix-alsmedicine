@@ -13,6 +13,7 @@ class HomeItem extends React.Component {
 
         this.state= {
             data:[],
+            searchValue:'',
             loading: true
         }
 
@@ -39,7 +40,13 @@ getItems = async(url) =>{
         //   console.log(error)
       }
 }
-    render(){
+
+searchItem = () =>{
+    let searchUrl = `${process.env.MIX_API_URL}/item?searchValue=${this.state.searchValue}`
+    this.getItems(searchUrl)
+}
+
+render(){
 
         const {data, loading, links} = this.state;
         return(
@@ -54,7 +61,10 @@ getItems = async(url) =>{
                 <div className="col">
 
                         <div>
-                            <input type="text" placeholder="Search Item" className="form-control" />
+                            <input type="text" placeholder="Search Item" className="form-control"
+                                onChange={ (e)=>this.setState({ searchValue: e.target.value},this.searchItem)
+                            }
+                            />
                         </div>
 
 
@@ -100,7 +110,7 @@ getItems = async(url) =>{
 
                                 <div>
                                     <button className="btn btn-primary" type="button"
-                                        disabled = { links.first !== null ? false : true}
+                                        disabled = { links.prev !== null ? false : true}
                                         onClick={ () => this.getItems(links.first)}>
                                         First
                                     </button>
@@ -113,7 +123,7 @@ getItems = async(url) =>{
                                     </button>
 
                                     <button className="btn btn-primary" type="button"
-                                        disabled = { links.last !== null ? false : true}
+                                        disabled = { links.next !== null ? false : true}
                                         onClick={ () => this.getItems(links.last)}>
                                         Last
                                     </button>
