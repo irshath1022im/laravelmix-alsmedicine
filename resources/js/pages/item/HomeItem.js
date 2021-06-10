@@ -1,23 +1,15 @@
-import axios from 'axios';
 import React from 'react'
 import { connect } from 'react-redux';
-import Category from '../../components/category/Category'
 import ItemList from '../../components/item/ItemList';
+import ItemSearch from '../../components/item/ItemSearch';
 import Loading from '../../components/shared/Loading';
-import { getMoreItems, initialItemAction, searchItems } from '../../redux/actions/itemAction';
+import { getMoreItems, initialItemAction } from '../../redux/actions/itemAction';
 
 
 
-class HomeItem extends React.Component {
+class HomeItem extends React.Component{
 
-    constructor(props){
-        super(props)
 
-        this.state= {
-            searchValue:'',
-        }
-
-    }
 
 componentDidMount() {
 
@@ -27,10 +19,6 @@ componentDidMount() {
 }
 
 
-searchItem = () =>{
-    let searchUrl = `${process.env.MIX_API_URL}/item?searchValue=${this.state.searchValue}`
-    this.props.dispatch(searchItems(searchUrl))
-}
 
 render(){
         const {dispatch} = this.props;
@@ -39,27 +27,18 @@ render(){
             <div>
 
             <div className="row">
-                <div className="col-sm-3">
-                  <span>Category</span>
-                  <Category />
-                </div>
+
 
                 <div className="col">
 
-                        <div>
-                            <input type="text" placeholder="Search Item" className="form-control"
-                                onChange={ (e)=>this.setState({ searchValue: e.target.value},this.searchItem)
-                            }
-                            />
-                        </div>
-
+                      <ItemSearch />
 
                         {
                             loading === false &&
                             items.length > 0 ?
 
                         <div>
-                           
+
                             <table className="table" >
                                 <thead className="thead-inverse">
                                 <tr>

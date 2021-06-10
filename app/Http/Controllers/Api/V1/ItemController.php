@@ -27,8 +27,14 @@ class ItemController extends Controller
                         return $query->where('name', 'like', '%'.$searchValue.'%')
                                     ->orWhere('erp_code', 'like', '%'.$searchValue.'%');
                     })
+                    ->when( $filterBy, function($query)use($filterBy)
+                    {
+                        return $query->where('category_id', $filterBy);
+                    })
                     ->paginate(10)
                     ->appends($request->except('page'));
+
+
 
 
         return ItemResource::collection($result);

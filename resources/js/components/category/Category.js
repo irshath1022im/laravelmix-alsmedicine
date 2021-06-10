@@ -5,6 +5,7 @@ import '../../pages/category/category.css';
 import { connect } from 'react-redux';
 
 import {filterByItems} from '../../redux/actions/itemAction';
+import axios from 'axios';
 
 class Category extends React.Component {
 
@@ -12,9 +13,14 @@ class Category extends React.Component {
         super(props)
 
         this.state = {
-            category: ['Taplets', 'Tubes', 'Paste']
+            category: []
         }
     }
+
+async componentDidMount (){
+
+
+}
 
     render() {
         const {category} = this.state
@@ -29,10 +35,10 @@ class Category extends React.Component {
                         category.map( (item,key) =>{
                             return(
                                 <div key={key} className="form-check">
-                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={item} 
+                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={item}
                                         onChange={(e)=>dispatch(filterByItems(`${process.env.MIX_API_URL}/item?filterBy=${e.target.value}`)) } />
                                     <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                       {item}
+                                       {item.name}
                                     </label>
                                 </div>
                             )

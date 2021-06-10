@@ -12,13 +12,15 @@ export default function ItemList(props) {
                     <td>{initial_qty}</td>
 
 
-                    <td>
-                        <a href="">
-                            <button className="btn btn-secondary">
-                                Edit
-                            </button>
-                        </a>
-                    </td>
+                {
+                    // <td>
+                    //     <a href="">
+                    //         <button className="btn btn-secondary">
+                    //             Edit
+                    //         </button>
+                    //     </a>
+                    // </td>
+                }
                 </tr>
         </>
     )
