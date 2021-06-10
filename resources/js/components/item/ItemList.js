@@ -8,7 +8,7 @@ export default function ItemList(props) {
                     <td scope="row">{erp_code}</td>
                     <td>{name}</td>
                     <td>{category}</td>
-                    <td><img className="w-25" src={thumbnail} /></td>
+                    <td><img className="w-25" src={`/storage/${thumbnail}`} /></td>
                     <td>{initial_qty}</td>
 
 
