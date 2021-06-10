@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React from 'react'
+import { connect } from 'react-redux';
 import Category from '../../components/category/Category'
 import ItemList from '../../components/item/ItemList';
 import Loading from '../../components/shared/Loading';
+import { getMoreItems, initialItemAction, searchItems } from '../../redux/actions/itemAction';
 
 
 
@@ -12,43 +14,27 @@ class HomeItem extends React.Component {
         super(props)
 
         this.state= {
-            data:[],
             searchValue:'',
-            loading: true
         }
 
     }
 
 componentDidMount() {
 
-    this.getItems(`${process.env.MIX_API_URL}/item`)
+    // this.getItems()
+    this.props.dispatch(initialItemAction())
 
 }
 
-getItems = async(url) =>{
-    try {
-        this.setState({ loading: true})
-        const result = await axios.get(url);
-        //   console.log(result)
-        this.setState({
-            loading: false,
-            data: result.data.data,
-            links: result.data.links
-        })
-
-      } catch (error) {
-        //   console.log(error)
-      }
-}
 
 searchItem = () =>{
     let searchUrl = `${process.env.MIX_API_URL}/item?searchValue=${this.state.searchValue}`
-    this.getItems(searchUrl)
+    this.props.dispatch(searchItems(searchUrl))
 }
 
 render(){
-
-        const {data, loading, links} = this.state;
+        const {dispatch} = this.props;
+        const {items, loading, links} = this.props.itemStore;
         return(
             <div>
 
@@ -70,9 +56,10 @@ render(){
 
                         {
                             loading === false &&
-                            data.length > 0 ?
+                            items.length > 0 ?
 
                         <div>
+                           
                             <table className="table" >
                                 <thead className="thead-inverse">
                                 <tr>
@@ -86,7 +73,7 @@ render(){
                                 <tbody>
                                      {
 
-                                            data.map((item) => {
+                                            items.map((item) => {
                                                 return(
                                                     <ItemList items = {item} key={item.id} />
                                                 )
@@ -111,20 +98,20 @@ render(){
                                 <div>
                                     <button className="btn btn-primary" type="button"
                                         disabled = { links.prev !== null ? false : true}
-                                        onClick={ () => this.getItems(links.first)}>
+                                        onClick={ () => dispatch(getMoreItems(links.first))}>
                                         First
                                     </button>
 
                                     <button className="btn btn-primary" type="button"
                                             disabled = { links.next !== null ? false : true}
-                                            onClick={ () => this.getItems(links.next)}
+                                            onClick={ () => dispatch(getMoreItems(links.next))}
                                     >
                                         Next
                                     </button>
 
                                     <button className="btn btn-primary" type="button"
                                         disabled = { links.next !== null ? false : true}
-                                        onClick={ () => this.getItems(links.last)}>
+                                        onClick={ () => dispatch(getMoreItems(links.last))}>
                                         Last
                                     </button>
                                 </div>
@@ -146,4 +133,10 @@ render(){
 }
 
 
-export default HomeItem;
+const mapStateToProps = ({item}) => {
+    return{
+        itemStore: item
+    }
+}
+
+export default connect(mapStateToProps)(HomeItem);

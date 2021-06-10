@@ -18,6 +18,7 @@ class ItemController extends Controller
     {
         //
         $searchValue = $request->searchValue;
+        $filterBy = $request->filterBy;
 
 
         $result = Item::
@@ -25,7 +26,8 @@ class ItemController extends Controller
                     {
                         return $query->where('name', 'like', '%'.$searchValue.'%')
                                     ->orWhere('erp_code', 'like', '%'.$searchValue.'%');
-                    })->paginate(10)
+                    })
+                    ->paginate(10)
                     ->appends($request->except('page'));
 
 

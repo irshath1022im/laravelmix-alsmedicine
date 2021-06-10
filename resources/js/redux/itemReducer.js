@@ -1,10 +1,15 @@
 
+const item = {
+  items:[],
+  loading: true,
+}
 
-
-const itemReducer = (state=[], action)=>{
+const itemReducer = (state=item, action)=>{
     switch (action.type) {
-      case 'SEARCH_ITEM':
-
+      case 'INITIAL_ITEMS':
+        return {
+          ...action.payload
+        }
             
       default: 
         return state;
