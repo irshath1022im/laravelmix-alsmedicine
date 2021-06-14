@@ -10947,10 +10947,44 @@ a.text-dark:focus {
 }
 
 .item-thumbnail {
-  width: 200px;
+  width: 150px;
 }
 
 .item-thumbnail img {
   width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  .item-main-container {
+    font-size: 0.7rem;
+  }
+
+  .item-thumbnail {
+    width: 50px;
+  }
+}
+
+.navbar-top {
+  margin-right: 15px;
+}
+
+.navbar-brand {
+  min-width: 200px;
+  margin-left: 15px;
+}
+
+.navbar-brand > img {
+  width: 100%;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  a {
+    font-size: 0.7rem;
+  }
+
+  .navbar-brand {
+    max-width: 300px;
+  }
 }
 

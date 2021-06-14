@@ -24,7 +24,7 @@ render(){
         const {dispatch} = this.props;
         const {items, loading, links} = this.props.itemStore;
         return(
-            <div className="container">
+            <div className="container item-main-container">
 
             <div className="row">
 

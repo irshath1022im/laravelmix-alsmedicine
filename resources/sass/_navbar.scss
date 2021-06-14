@@ -1,0 +1,36 @@
+
+.navbar-top{
+
+margin-right: 15px;
+   
+}
+
+
+
+.navbar-brand{
+    min-width: 200px;
+    margin-left: 15px;
+    
+}
+
+.navbar-brand > img {
+    width: 100%;
+    padding: 10px;
+    
+}
+
+
+
+
+@media only screen and ( max-width:500px) {
+ a {
+  font-size: 0.7rem
+}
+
+.navbar-brand{
+    max-width: 300px;
+}
+
+
+}
+

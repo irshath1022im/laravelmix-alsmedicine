@@ -1,10 +1,20 @@
 
 .item-thumbnail{
-    width: 200px
+    width: 150px
 }
 
 .item-thumbnail img {
     width:100%;
 }
 
+
+@media only screen and ( max-width:500px) {
+    .item-main-container{
+        font-size: 0.7rem
+    }
+
+    .item-thumbnail{
+        width:50px;
+    }
+}
 
