@@ -14,10 +14,9 @@ import AddReceiving from './pages/receiving/AddReceiving';
 function Home() {
   return (
 
-    <div className="container">
+    <div>
        <Router>
         <NavBar />
-        <hr />
         <Switch>
           <Route path="/" component={HomeItem} exact />
           <Route path="/items" exact component={HomeItem} />
