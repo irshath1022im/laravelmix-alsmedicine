@@ -16,9 +16,13 @@ const ImageModal = ({show,handleClose,thumbnail})=>{
 
           {
                 thumbnail.includes('https://') ?
-                <img className="" src={`${thumbnail}`} />
+                <div className="item-thumbnail text-center">
+                    <img className="" src={`${thumbnail}`} />
+                </div>
                 :
-                <img className="" src={`/storage/${thumbnail}`} />
+                <div className="item-thumbnail text-center">
+                    <img className="" src={`/storage/${thumbnail}`} />
+                </div>
 
           }
         </Modal.Body>

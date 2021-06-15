@@ -14,7 +14,7 @@ export default function ItemList(props) {
                     <td scope="row">{erp_code}</td>
                     <td>{name}</td>
                     <td>{category}</td>
-                    <td className="item-thumbnail">
+                    <td>
                      {
                         // console.log(typeof(thumbnail))
 

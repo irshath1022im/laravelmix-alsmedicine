@@ -1,20 +1,18 @@
-
-.item-thumbnail{
-    width: 150px
+.item-thumbnail {
+    width: 150px;
+    margin: 0 auto;
 }
 
 .item-thumbnail img {
-    width:100%;
+    width: 100%;
 }
 
-
-@media only screen and ( max-width:500px) {
-    .item-main-container{
-        font-size: 0.7rem
+@media only screen and (max-width: 500px) {
+    .item-main-container {
+        font-size: 0.7rem;
     }
 
-    .item-thumbnail{
-        width:50px;
+    .item-thumbnail {
+        width: 50px;
     }
 }
-

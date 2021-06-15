@@ -10948,6 +10948,7 @@ a.text-dark:focus {
 
 .item-thumbnail {
   width: 150px;
+  margin: 0 auto;
 }
 
 .item-thumbnail img {
