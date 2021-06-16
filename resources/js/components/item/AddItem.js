@@ -12,7 +12,12 @@ class AddItem extends Component {
             category: '',
             name: '',
             erp_code:'',
-            thumbnail:'',
+            file:'',
+            thumbnail: {
+                base64:'',
+                type:'',
+                name:''
+            },
             brand:'',
             initial_qty:''
         }
@@ -22,10 +27,47 @@ componentDidMount(){
     this.props.dispatch(getCategoryAction())
 }
 
+convertImageToBase64 = (e)=>{
+    let file = e.target.files
+    // console.log(file)
+    // const [type,name] = file[0];
+    this.setState({
+        thumbnail: {
+            ...this.state.thumbnail,
+            type: file[0].type,
+            name: file[0].name
+        }
+    })
+    // console.log(thumbnail)
+//call the JS FIle Reader to read the uploaded file
+
+    let reader = new FileReader();
+    console.log(reader);
+    reader.readAsDataURL(file[0])
+
+// call the readAsDataURL method in fileReader
+
+// reader.onloadstart = (e)=>{
+    //     console.log(e)
+    // }
+
+    reader.onload = (event)=>{
+        // console.log('hi')
+        this.setState({
+            file: event.target.result,
+            thumbnail : {
+                ...this.state.thumbnail,
+                base64: event.target.result,
+            }})
+        }
+
+}
+
 formSubmit =(e)=>{
     e.preventDefault();
 
-    const result =  axios.post(`${process.env.MIX_API_URL}/item`, this.state)
+    this.sendData(this.state)
+
     // try {
     //     const result = await axios.post(`${process.env.MIX_API_URL/item}`, ...this.state)
     //     console.log(result)
@@ -33,6 +75,16 @@ formSubmit =(e)=>{
 
     //     }
 
+}
+
+
+sendData = async (data)=>{
+    try {
+        const result =  await axios.post(`${process.env.MIX_API_URL}/item`, data)
+        console.log(result)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 render() {
@@ -119,10 +171,16 @@ render() {
                     </div>
 
 
+                    {
+                        !this.state.file == '' &&
+                        <img src={this.state.file} style={{ width: 80, height:80}}/>
+                    }
+
                     <div className="form-group">
                     <label htmlFor="formGroupExampleInput2">Thumbnail</label>
                     <input type="file" className="form-control-file" id="formGroupExampleInput2"
-                        onChange={ (e)=>this.setState({ thumbnail: e.target.value})}
+                        onChange={ (e)=>this.convertImageToBase64(e)}
+                        //  onChange={ (e)=> this.setState({ thumbnail: e.target.files[0]}, ()=> this.sendData({thumbnail: this.state.thumbnail}))}
                     />
                   </div>
 

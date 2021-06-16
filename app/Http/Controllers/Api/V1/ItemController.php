@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Item;
 use Illuminate\Http\Request;
+use Image;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ItemResource;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -48,11 +50,70 @@ class ItemController extends Controller
     {
         //
 
+        // dump($request->get('thumbnail'));
+
+        // dump($request->all());
+        // dump($request->input('thumbnail'));
+
+        // dump($request->file($request->thumbnail));
+
+        $request->validate([
+            'name' => 'required',
+            'thumbnail.type' => 'required|starts_with:image/',
+            'thumbnail.base64' => 'required',
+        ]);
 
 
-        if ($request->file('thumbnail')) {
-            return response()->json($request->file('thumbnail'));
+        if ($request->file) {
+            $position = strpos($request->file, ';');
+            $sub = substr($request->file, 0, $position);
+            // dump($sub);
+            $ext = explode('/', $sub)[1];
+            // dump($ext);
+
+            $name = $request->name . "." . $ext;
+            $img = Image::make($request->file)->resize(300, 200);
+            $upload_path = 'images/itemThumbnail/';
+            $image_url = $upload_path . $name;
+            $img->save($image_url);
+
+            dump($img->dirname . $img->basename);
         }
+
+
+
+        // dump($request->thumbnail['base64']);
+
+        // $img = str_replace('data:' . $request->thumbnail['type'] . ';base64,', '', $request->thumbnail['base64']);
+
+        // // dump($img);
+
+        // $decoded = base64_decode($img);
+
+        // return file_put_contents(storage_path() . "testImage/test3.jpeg",  $decoded);
+
+        // $path = Storage::disk('public')->putFileAs('testImage', $decoded, $request->thumbnail['name'] . '.', 'png');
+
+        // dump($path);
+
+
+
+
+        // dump($decoded);
+
+        // $image = imagecreatefromstring($decoded);
+
+
+
+        // dump($file->guessExtension());
+
+        // $name2 = Storage::disk('local')->putFileAs('TestImage', $file, $request->name. '.'. $file->guessExtension() );
+
+        // if ($request->get('thumbnail')) {
+        //     return response()->json($request->get('file'));
+        // } else {
+        //     return response()->json('nothing');
+        // }
     }
 
     /**
