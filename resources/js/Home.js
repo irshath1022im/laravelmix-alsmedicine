@@ -9,6 +9,10 @@ import SingleReceiving from './pages/receiving/SingleReceiving';
 import HomeItem from './pages/item/HomeItem';
 import NewReceivingItem from './components/receivingItem/NewReceivingItem';
 import AddReceiving from './pages/receiving/AddReceiving';
+import AdminHome from './pages/dashboard/AdminHome';
+import AdminItem from './pages/dashboard/AdminItem';
+import Login from './pages/auth/Login';
+import AddItem from './components/item/AddItem';
 
 
 function Home() {
@@ -27,6 +31,10 @@ function Home() {
           <Route path="/consumption" exact component={Consumption} />
           <Route path="/nearExpiry" exact component={NearExpiry} />
           <Route path="/outofstock" exact component={OutOfStock} />
+          <Route path="/admin" exact component={AdminHome} />
+          <Route path="/adminItem" component={AdminItem} />
+          <Route path="/admin/item/new" component={AddItem} />
+          <Route path="/login" component={Login} />
         </Switch>
        </Router>
 

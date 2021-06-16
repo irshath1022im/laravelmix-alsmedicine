@@ -1,16 +1,24 @@
-import users from "../data/users";
 
+const user = {
+    logedIn : true,
+    userName:''
+}
 
-const userReducer = (state= users, action)=>{
+const userReducer = (state= user, action)=>{
     switch (action.type) {
-      // case value:
-        
-      //   break;
-    
-      default: 
+        case 'LOGIN_REQUEST':
+            return state = action.payload
+
+        case 'LOGOUT_REQUEST':
+            return {
+                ...state,
+                logedIn: action.payload.logedIn
+            }
+
+      default:
         return state;
-      
-  
+
+
     }
 };
 

@@ -21,18 +21,15 @@ class ItemController extends Controller
         $filterBy = $request->filterBy;
 
 
-        $result = Item::
-                    when( $searchValue, function($query)use($searchValue)
-                    {
-                        return $query->where('name', 'like', '%'.$searchValue.'%')
-                                    ->orWhere('erp_code', 'like', '%'.$searchValue.'%');
-                    })
-                    ->when( $filterBy, function($query)use($filterBy)
-                    {
-                        return $query->where('category_id', $filterBy);
-                    })
-                    ->paginate(10)
-                    ->appends($request->except('page'));
+        $result = Item::when($searchValue, function ($query) use ($searchValue) {
+            return $query->where('name', 'like', '%' . $searchValue . '%')
+                ->orWhere('erp_code', 'like', '%' . $searchValue . '%');
+        })
+            ->when($filterBy, function ($query) use ($filterBy) {
+                return $query->where('category_id', $filterBy);
+            })
+            ->paginate(10)
+            ->appends($request->except('page'));
 
 
 
@@ -50,6 +47,12 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         //
+
+
+
+        if ($request->file('thumbnail')) {
+            return response()->json($request->file('thumbnail'));
+        }
     }
 
     /**
