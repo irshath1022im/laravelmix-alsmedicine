@@ -4,6 +4,7 @@ import userReducer from "./userReducer";
 import receivingReducer from './receivingReducer';
 import addReceivingsReducer from './addReceivingReducer';
 import categoryReducer from "./categoryReducer";
+import alertReducer from "./stores/alertReducer";
 
 
 const rootReducer = combineReducers(
@@ -12,7 +13,8 @@ const rootReducer = combineReducers(
             item : itemReducer,
             user : userReducer,
             receivings:receivingReducer,
-            addReceiving: addReceivingsReducer
+            addReceiving: addReceivingsReducer,
+            alertStore: alertReducer
         }
     );
 

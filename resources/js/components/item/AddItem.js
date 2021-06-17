@@ -205,7 +205,7 @@ render() {
 
 const mapStateToProps = ({categoryStore}) =>{
     return{
-        categoryStore
+        categoryStore,
     }
 }
 

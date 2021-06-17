@@ -1,19 +1,20 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
-
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
+//item page
+@import "home";
 
 //card
-@import 'card';
+@import "card";
 
 //item page
-@import 'item';
+@import "item";
 
 //item page
-@import 'navbar';
+@import "navbar";

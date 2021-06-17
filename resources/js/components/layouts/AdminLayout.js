@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const AdminLayout = ({children}) =>{
@@ -24,5 +24,6 @@ const AdminLayout = ({children}) =>{
 
     )
 }
+
 
 export default AdminLayout;
